@@ -1,15 +1,19 @@
-import {useState} from 'react'
-import {pantoneColors as colors} from "../colors";
+import {useState, useEffect} from 'react'
 import { pickQuizData } from '../helpers.js';
 import Swatch from './Swatch'
 import Options from './Options'
 
 const OPTION_COUNT = 8;
 
-function Quiz() {
+function Quiz({colors}) {
   const [quizData, setQuizData] = useState(pickQuizData(colors, OPTION_COUNT));
   const [showFailedState, setShowFailedState] = useState(false)
   const [showSuccessState, setShowSuccessState] = useState(false)
+  const [showOptionSwatch, setShowOptionSwatch] = useState(false)
+
+  useEffect(() => {
+    resetQuiz();
+  }, [colors])
   
   const {colorOptions, correctColorIndex} = quizData;
 
@@ -18,21 +22,20 @@ function Quiz() {
   const resetQuiz = () => {
     setShowFailedState(false);
     setShowSuccessState(false);
+    setShowOptionSwatch(false);
     setQuizData(pickQuizData(colors, OPTION_COUNT))
   }
 
   const flashSuccess = () => {
     setShowFailedState(false)
     setShowSuccessState(true);
+    setShowOptionSwatch(true)
   }
 
   const handleSelect = selectedIndex => {
     const isCorrect = selectedIndex === correctColorIndex;
     if(isCorrect) {
       flashSuccess()
-      setTimeout(() => {
-        resetQuiz()
-      }, 1000);
     } else {
       setShowFailedState(true)
     }
@@ -45,9 +48,12 @@ function Quiz() {
   return (
     <div className="Quiz">
       <Swatch color={correctColor} />
-      <Options options={colorOptions} onSelect={handleSelect} />
-      {showFailedState && <div style={{color: 'red'}}>Incorrect</div>}
-      <div className="success" style={{color: 'green', opacity: showSuccessState ? 1 : 0}}>Correct! 🎉</div>
+      <div>
+        <Options options={colorOptions} onSelect={handleSelect} showOptionSwatch={showOptionSwatch} />
+        {showFailedState && <div style={{color: 'red'}}>Incorrect</div>}
+        <div className="success" style={{color: 'green', opacity: showSuccessState ? 1 : 0}}>Correct! 🎉</div>
+        {showSuccessState && <button onClick={resetQuiz}>Next</button>}
+      </div>
     </div>
   );
 }

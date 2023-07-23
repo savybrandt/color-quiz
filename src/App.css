@@ -3,22 +3,38 @@
   padding: 25px;
 }
 
+.Quiz {
+  display: flex;
+}
+
 .Swatch {
-  height: 500px;
-  width: 500px;
-  margin: auto;
+  height: 700px;
+  width: 700px;
+  margin: 14px;
 }
 
 .Options {
   margin: 25px auto;
-    display: flex;
-    justify-content: center;
-    width: 500px;
-    flex-wrap: wrap;
-    gap: 20px;
+  display: flex;
+  justify-content: center;
+  width: 500px;
+  flex-wrap: wrap;
+  gap: 20px;
 }
 
 .success {
   opacity: 1;
   transition: opacity 0.5s;
+}
+
+.option-swatch {
+  height: 100px;
+  width: 100px;
+  margin: auto;
+}
+
+.option-container {
+    height: 130px;
+    width: 100px;
+    margin: auto;
 }
