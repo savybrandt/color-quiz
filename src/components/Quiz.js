@@ -1,12 +1,13 @@
 import {useState, useEffect} from 'react'
-import { pickQuizData } from '../helpers.js';
+import { getRandomIndex, pickColorOptions } from '../helpers.js';
 import Swatch from './Swatch'
 import Options from './Options'
 
 const OPTION_COUNT = 8;
 
 function Quiz({colors, difficulty}) {
-  const [quizData, setQuizData] = useState(pickQuizData(colors, OPTION_COUNT, difficulty));
+  const [colorOptions, setColorOptions] = useState(pickColorOptions(colors, OPTION_COUNT, difficulty));
+  const [correctColorIndex, setCorrectColorIndex] = useState(getRandomIndex(colorOptions))
   const [showFailedState, setShowFailedState] = useState(false)
   const [showSuccessState, setShowSuccessState] = useState(false)
   const [showOptionSwatch, setShowOptionSwatch] = useState(false)
@@ -15,15 +16,24 @@ function Quiz({colors, difficulty}) {
     resetQuiz();
   }, [colors, difficulty])
   
-  const {colorOptions, correctColorIndex} = quizData;
-
   const correctColor = colorOptions[correctColorIndex];
 
   const resetQuiz = () => {
     setShowFailedState(false);
     setShowSuccessState(false);
     setShowOptionSwatch(false);
-    setQuizData(pickQuizData(colors, OPTION_COUNT, difficulty))
+    setColorOptions(pickColorOptions(colors, OPTION_COUNT, difficulty), () => {
+      setCorrectColorIndex(getRandomIndex(colorOptions))
+    })
+  }
+
+  const replayColors = () => {
+    const currentCorrectColorIndex = correctColorIndex;
+    const newCorrectColorIndex = getRandomIndex(colorOptions)
+    setShowFailedState(false);
+    setShowSuccessState(false);
+    setShowOptionSwatch(false);
+    setCorrectColorIndex(newCorrectColorIndex);
   }
 
   const flashSuccess = () => {
@@ -53,6 +63,7 @@ function Quiz({colors, difficulty}) {
         {showFailedState && <div style={{color: 'red'}}>Incorrect</div>}
         <div className="success" style={{color: 'green', opacity: showSuccessState ? 1 : 0}}>Correct! 🎉</div>
         {showSuccessState && <button onClick={resetQuiz}>Next</button>}
+        {showSuccessState && <button onClick={replayColors}>Replay Colors</button>}
       </div>
     </div>
   );
