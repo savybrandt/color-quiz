@@ -1,4 +1,4 @@
-const pickRandomColor = colors => Math.floor(Math.random() * colors.length);
+const getRandomIndex = colors => Math.floor(Math.random() * colors.length);
 
 const pickColorOptions = (colors, optionCount) => {
   const colorPool = [...colors];
@@ -12,8 +12,14 @@ const pickColorOptions = (colors, optionCount) => {
   return options
 }
 
-export const pickQuizData = (colors, optionCount) => {
-  const colorOptions = pickColorOptions(colors, optionCount);
-  const correctColorIndex = pickRandomColor(colorOptions);
+export const pickQuizData = (colors, optionCount, isHardMode) => {
+  let colorRange = [...colors];
+  if (isHardMode) {
+    const rangeLength = 20;
+    const startingIndex = getRandomIndex(colorRange);
+    colorRange = colorRange.slice(startingIndex, startingIndex + rangeLength);
+  }
+  const colorOptions = pickColorOptions(colorRange, optionCount);
+  const correctColorIndex = getRandomIndex(colorOptions);
   return {colorOptions, correctColorIndex};
 }

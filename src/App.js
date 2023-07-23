@@ -16,6 +16,7 @@ const PANTONE = 'pantone';
 const DEFAULT_COLOR_GROUP = PANTONE;
 
 function App() {
+  const [isHardMode, setIsHardMode] = useState(false);
   const [colors, setColors] = useState(colorGroups[DEFAULT_COLOR_GROUP])
   
   const handleSelect = (colorGroup) => {
@@ -31,8 +32,10 @@ function App() {
         <label htmlFor="crayola">Crayola</label>
         <input type="radio" value="pantone" name="colorGroup" id="pantone" defaultChecked={DEFAULT_COLOR_GROUP === PANTONE} onClick={() => handleSelect(PANTONE)}/>
         <label htmlFor="pantone">Pantone</label>
+        <input type="checkbox" id="hardMode" checked={isHardMode} onChange={() => setIsHardMode(!isHardMode)}/>
+        <label htmlFor="hardMode">Hard Mode</label>
       </form>
-      <Quiz colors={colors}/>
+      <Quiz colors={colors} isHardMode={isHardMode}/>
     </div>
   );
 }
