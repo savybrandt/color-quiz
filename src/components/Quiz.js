@@ -5,15 +5,15 @@ import Options from './Options'
 
 const OPTION_COUNT = 8;
 
-function Quiz({colors, isHardMode}) {
-  const [quizData, setQuizData] = useState(pickQuizData(colors, OPTION_COUNT, isHardMode));
+function Quiz({colors, difficulty}) {
+  const [quizData, setQuizData] = useState(pickQuizData(colors, OPTION_COUNT, difficulty));
   const [showFailedState, setShowFailedState] = useState(false)
   const [showSuccessState, setShowSuccessState] = useState(false)
   const [showOptionSwatch, setShowOptionSwatch] = useState(false)
 
   useEffect(() => {
     resetQuiz();
-  }, [colors, isHardMode])
+  }, [colors, difficulty])
   
   const {colorOptions, correctColorIndex} = quizData;
 
@@ -23,7 +23,7 @@ function Quiz({colors, isHardMode}) {
     setShowFailedState(false);
     setShowSuccessState(false);
     setShowOptionSwatch(false);
-    setQuizData(pickQuizData(colors, OPTION_COUNT, isHardMode))
+    setQuizData(pickQuizData(colors, OPTION_COUNT, difficulty))
   }
 
   const flashSuccess = () => {

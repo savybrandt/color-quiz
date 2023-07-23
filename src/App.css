@@ -3,6 +3,19 @@
   padding: 25px;
 }
 
+.quizSettings {
+  display: flex;
+  gap: 25px;
+}
+
+.settingLabel {
+  font-weight: bold;
+}
+
+.radio {
+  margin: 0px 6px;
+}
+
 .Quiz {
   display: flex;
 }
