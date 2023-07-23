@@ -3,7 +3,7 @@ export const getRandomIndex = colors => Math.floor(Math.random() * colors.length
 const difficultyRangeLengths = {
   easy: null,
   medium: 100,
-  hard: 30,
+  hard: 50,
   superHard: 10,
 }
 
