@@ -1,17 +1,14 @@
-import {useState, useEffect} from 'react'
+import {useState} from 'react'
+import {crayolaColors as colors} from "../colors";
 import { pickQuizData } from '../helpers.js';
 import Swatch from './Swatch'
 import Options from './Options'
 
-const OPTION_COUNT = 6;
+const OPTION_COUNT = 8;
 
-function Quiz({colors}) {
+function Quiz() {
   const [quizData, setQuizData] = useState(pickQuizData(colors, OPTION_COUNT));
   const [showFailedState, setShowFailedState] = useState(false)
-  
-  useEffect(() => {
-    resetQuiz()
-  }, [colors])
   
   const {colorOptions, correctColorIndex} = quizData;
 
