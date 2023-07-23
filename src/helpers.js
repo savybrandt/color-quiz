@@ -2,8 +2,8 @@ export const getRandomIndex = colors => Math.floor(Math.random() * colors.length
 
 const difficultyRangeLengths = {
   easy: null,
-  medium: 100,
-  hard: 50,
+  medium: 1000,
+  hard: 100,
   superHard: 10,
 }
 
@@ -11,9 +11,13 @@ export const pickColorOptions = (colors, optionCount, difficulty) => {
   let colorRange = [...colors];
 
   // get range length
-  const rangeLength = difficultyRangeLengths[difficulty];
+  let rangeLength = difficultyRangeLengths[difficulty];
+  let startingIndex = getRandomIndex(colorRange) % (colorRange.length - rangeLength);
+
+  if (rangeLength + startingIndex > colorRange.length) {
+    rangeLength = rangeLength
+  }
   if (rangeLength) {
-    const startingIndex = getRandomIndex(colorRange);
     colorRange = colorRange.slice(startingIndex, startingIndex + rangeLength);
   }
 
