@@ -1,5 +1,5 @@
 import {useState} from 'react'
-import {crayolaColors as colors} from "../colors";
+import {pantoneColors as colors} from "../colors";
 import { pickQuizData } from '../helpers.js';
 import Swatch from './Swatch'
 import Options from './Options'
