@@ -1,23 +1,27 @@
-import logo from './logo.svg';
+import {useState} from "react"
+import {cssColors, crayolaColors} from "./colors";
+import Quiz from './components/Quiz';
 import './App.css';
 
+const colorMap = {css: cssColors, crayola: crayolaColors}
+
 function App() {
+  const [colors, setColors] = useState(colorMap.css)
+
+  const handleClick = (colorGroup) => {
+    setColors(colorMap[colorGroup])
+  }
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <form>
+        <input type="radio" name="colorGroup" id="css" value="css" defaultChecked onClick={() => handleClick('css')}/>
+        <label htmlFor="css">CSS</label>
+        <input type="radio" name="colorGroup" id="crayola" value="crayola" onClick={() => handleClick('crayola')}/>
+        <label htmlFor="crayola">Crayola</label>
+      </form>
+      <br/>
+      <Quiz colors={colors} />
     </div>
   );
 }
