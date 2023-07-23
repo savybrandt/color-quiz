@@ -3,8 +3,10 @@ import { pickQuizData } from '../helpers.js';
 import Swatch from './Swatch'
 import Options from './Options'
 
+const OPTION_COUNT = 6;
+
 function Quiz({colors}) {
-  const [quizData, setQuizData] = useState(pickQuizData(colors, 8));
+  const [quizData, setQuizData] = useState(pickQuizData(colors, OPTION_COUNT));
   const [showFailedState, setShowFailedState] = useState(false)
   
   useEffect(() => {
@@ -17,7 +19,7 @@ function Quiz({colors}) {
 
   const resetQuiz = () => {
     setShowFailedState(false);
-    setQuizData(pickQuizData(colors, 8))
+    setQuizData(pickQuizData(colors, OPTION_COUNT))
   }
 
   const handleSelect = selectedIndex => {
