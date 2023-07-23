@@ -9,6 +9,7 @@ const OPTION_COUNT = 8;
 function Quiz() {
   const [quizData, setQuizData] = useState(pickQuizData(colors, OPTION_COUNT));
   const [showFailedState, setShowFailedState] = useState(false)
+  const [showSuccessState, setShowSuccessState] = useState(false)
   
   const {colorOptions, correctColorIndex} = quizData;
 
@@ -16,13 +17,22 @@ function Quiz() {
 
   const resetQuiz = () => {
     setShowFailedState(false);
+    setShowSuccessState(false);
     setQuizData(pickQuizData(colors, OPTION_COUNT))
+  }
+
+  const flashSuccess = () => {
+    setShowFailedState(false)
+    setShowSuccessState(true);
   }
 
   const handleSelect = selectedIndex => {
     const isCorrect = selectedIndex === correctColorIndex;
     if(isCorrect) {
-       resetQuiz()
+      flashSuccess()
+      setTimeout(() => {
+        resetQuiz()
+      }, 1000);
     } else {
       setShowFailedState(true)
     }
@@ -37,6 +47,7 @@ function Quiz() {
       <Swatch color={correctColor} />
       <Options options={colorOptions} onSelect={handleSelect} />
       {showFailedState && <div style={{color: 'red'}}>Incorrect</div>}
+      <div className="success" style={{color: 'green', opacity: showSuccessState ? 1 : 0}}>Correct! 🎉</div>
     </div>
   );
 }
