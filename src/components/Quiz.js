@@ -36,18 +36,25 @@ function Quiz({colors, difficulty}) {
     setCorrectColorIndex(newCorrectColorIndex);
   }
 
-  const flashSuccess = () => {
+  const showSuccess = () => {
     setShowFailedState(false)
     setShowSuccessState(true);
     setShowOptionSwatch(true)
   }
 
+  const flashFailure = () => {
+    setShowFailedState(true)
+    setTimeout(() => {
+      setShowFailedState(false)
+    }, 1000);
+  }
+
   const handleSelect = selectedIndex => {
     const isCorrect = selectedIndex === correctColorIndex;
     if(isCorrect) {
-      flashSuccess()
+      showSuccess()
     } else {
-      setShowFailedState(true)
+      flashFailure()
     }
   }
 
@@ -60,14 +67,14 @@ function Quiz({colors, difficulty}) {
       <Swatch color={correctColor} />
       <div>
         <div className="result-container">
-          {showFailedState && <div style={{color: 'red'}}>Incorrect</div>}
-          {showSuccessState && <div style={{color: 'green'}}>Correct! 🎉</div>}
+          <div style={{color: 'green', opacity: showSuccessState ? 1 : 0}}>Correct! 🎉</div>
+          <div className="fade-in" style={{color: 'red', opacity: showFailedState ? 1 : 0}}>Incorrect</div>
         </div>
         <Options options={colorOptions} onSelect={handleSelect} showOptionSwatch={showOptionSwatch} />
 
         <div className="button-container" style={{opacity: showSuccessState ? 1 : 0}}>
-          <button onClick={resetQuiz}>Next</button>
           <button onClick={replayColors}>Replay Colors</button>
+          <button onClick={resetQuiz}>Next</button>
         </div>
       </div>
     </div>
