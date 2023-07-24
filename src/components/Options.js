@@ -4,8 +4,8 @@ function Options({options, onSelect, showOptionSwatch}) {
       {options.map((option, idx) => 
       (
         <div key={option.name} className="option-container">
-          <button  onClick={() => onSelect(idx)}>{option.name}</button>
-          {showOptionSwatch && <div className="option-swatch" style={{backgroundColor: option.hex}}></div>}
+          <button  className="option-button" onClick={() => onSelect(idx)}>{option.name}</button>
+          <div className="option-swatch fade-in" style={{backgroundColor: option.hex, opacity: showOptionSwatch ? 1 : 0}}/>
         </div>
       )
       )}

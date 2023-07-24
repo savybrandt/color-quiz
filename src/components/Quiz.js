@@ -59,11 +59,16 @@ function Quiz({colors, difficulty}) {
     <div className="Quiz">
       <Swatch color={correctColor} />
       <div>
+        <div className="result-container">
+          {showFailedState && <div style={{color: 'red'}}>Incorrect</div>}
+          {showSuccessState && <div style={{color: 'green'}}>Correct! 🎉</div>}
+        </div>
         <Options options={colorOptions} onSelect={handleSelect} showOptionSwatch={showOptionSwatch} />
-        {showFailedState && <div style={{color: 'red'}}>Incorrect</div>}
-        <div className="success" style={{color: 'green', opacity: showSuccessState ? 1 : 0}}>Correct! 🎉</div>
-        {showSuccessState && <button onClick={resetQuiz}>Next</button>}
-        {showSuccessState && <button onClick={replayColors}>Replay Colors</button>}
+
+        <div className="button-container" style={{opacity: showSuccessState ? 1 : 0}}>
+          <button onClick={resetQuiz}>Next</button>
+          <button onClick={replayColors}>Replay Colors</button>
+        </div>
       </div>
     </div>
   );
