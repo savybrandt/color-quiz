@@ -22,9 +22,8 @@ function Quiz({colors, difficulty}) {
     setShowFailedState(false);
     setShowSuccessState(false);
     setShowOptionSwatch(false);
-    setColorOptions(pickColorOptions(colors, OPTION_COUNT, difficulty), () => {
-      setCorrectColorIndex(getRandomIndex(colorOptions))
-    })
+    setColorOptions(pickColorOptions(colors, OPTION_COUNT, difficulty))
+    setCorrectColorIndex(getRandomIndex(colorOptions))
   }
 
   const replayColors = () => {
